@@ -29,6 +29,12 @@ h1 {
 a {
     color: #E6E6E6;
     text-decoration: none;
+    o
+}
+
+a:hover {
+    color: #E6E6E6;
+    text-decoration: underline;
 }
 
 .randomBox {
