@@ -1,0 +1,43 @@
+body {
+    color: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #670000;
+    font-size: 16px;
+    font-family: 'JetBrains Mono';
+    word-wrap: break-word;
+}
+
+h1 {
+    color: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.3em
+
+}
+
+.socials {
+    color: #E6E6E6;
+    font-size: 1.2em;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+a {
+    color: #E6E6E6;
+    text-decoration: none;
+}
+
+.randomBox {
+    width: 30em;
+    height: 20em;
+    border: 3px black solid;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('fonts/JetBrainsMonoNerdFont-Thin.ttf')
+}
