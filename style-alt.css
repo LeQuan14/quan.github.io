@@ -1,0 +1,79 @@
+body {
+    color: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3d0000;
+    font-size: 16px;
+    font-family: 'JetBrains Mono';
+    word-wrap: break-word;
+    background-image: 
+        radial-gradient(transparent 0.6em, #3d0000 0.6em),
+        conic-gradient(at 1em 1em, transparent 270deg, #80222266 270deg),
+        conic-gradient(at 1em 1em, transparent 270deg, #80333366 270deg),
+        conic-gradient(at 1em 1em, transparent 270deg, #80444466 270deg),
+        conic-gradient(at 1em 1em, transparent 270deg, #80555566 270deg);
+    background-size: 1em 1em, 4em 4em, 4em 4em, 4em 4em, 4em 4em;
+    animation: bpx 12s infinite, bpy 12s -3.75s infinite;
+}
+
+h1 {
+    color: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.3em
+
+}
+
+.socials {
+    color: #E6E6E6;
+    font-size: 1.2em;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+a {
+    color: #E6E6E6;
+    text-decoration: none;
+    
+}
+
+a:hover {
+    color: #E6E6E6;
+    text-decoration: underline;
+}
+
+.randomBox {
+    width: 30em;
+    height: 20em;
+    border: 3px black solid;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('fonts/JetBrainsMonoNerdFont-Thin.ttf')
+}
+
+@keyframes bpx {
+    0%, 7.5%, 100% { background-position-x: 0, 0, 1em, 2em, 3em; }
+    12.5%, 20% { background-position-x: 0, 1em, 0, 3em, 2em; }
+    25%, 32.5% { background-position-x: 0, -1em, -2em, 5em, 4em; }
+    37.5%, 45% { background-position-x: 0, 1em, -4em, 7em, 2em; }
+    50%, 57.5% { background-position-x: 0, -2em, -5em, 8em, 5em; }
+    62.5%, 70% { background-position-x: 0, -3em, -4em, 7em, 6em; }
+    75%, 82.5% { background-position-x: 0, -1em, -2em, 5em, 4em; }
+    87.5%, 95% { background-position-x: 0, -3em, 0, 3em, 6em; }
+}
+
+@keyframes bpy {
+    0%, 7.5%, 100% { background-position-y: 0, 0, 1em, 2em, 3em; }
+    12.5%, 20% { background-position-y: 0, 1em, 0, 3em, 2em; }
+    25%, 32.5% { background-position-y: 0, -1em, -2em, 5em, 4em; }
+    37.5%, 45% { background-position-y: 0, 1em, -4em, 7em, 2em; }
+    50%, 57.5% { background-position-y: 0, -2em, -5em, 8em, 5em; }
+    62.5%, 70% { background-position-y: 0, -3em, -4em, 7em, 6em; }
+    75%, 82.5% { background-position-y: 0, -1em, -2em, 5em, 4em; }
+    87.5%, 95% { background-position-y: 0, -3em, 0, 3em, 6em; }
+}
