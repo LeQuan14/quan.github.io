@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fechten - Kampfgericht</title>
+    <link rel="stylesheet" href="dashboard-style.css">
+</head>
+<body>
+
+    <h1>Quan's Fencing Dashboard</h1>
+
+    <div>
+        <div class="timer" id="time-display">03:00</div>
+        <br>
+        <button id="start-stop-btn" onclick="toggleTimer()">Start</button>
+        <button onclick="resetTimer()">Reset Zeit</button>
+    </div>
+
+    <div class="score-board">
+        <div class="fencer">
+            <h2>Left Fencer</h2>
+            <div class="score" id="score-left">0</div>
+            <button class="btn-score" onclick="changeScore('left', -1)">-</button>
+            <button class="btn-score" onclick="changeScore('left', 1)">+</button>
+        </div>
+
+        <div class="fencer">
+            <h2>Right Fencer</h2>
+            <div class="score" id="score-right">0</div>
+            <button class="btn-score" onclick="changeScore('right', -1)">-</button>
+            <button class="btn-score" onclick="changeScore('right', 1)">+</button>
+        </div>
+    </div>
+
+    <button onclick="resetAll()">Full Reset</button>
+
+    <script>
+        // variables for timer and scores
+        let timeLeft = 180; // 3 minutes in seconds
+        let timerId = null;
+        let scoreLeft = 0;
+        let scoreRight = 0;
+
+        // Timer Logic
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById('time-display').innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            if (timerId === null) {
+                // Start
+                timerId = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerId);
+                        timerId = null;
+                        alert("Zeit abgelaufen!");
+                    }
+                }, 1000);
+                document.getElementById('start-stop-btn').innerText = "Stopp";
+            } else {
+                // Stop
+                clearInterval(timerId);
+                timerId = null;
+                document.getElementById('start-stop-btn').innerText = "Start";
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            timeLeft = 180;
+            updateTimerDisplay();
+            document.getElementById('start-stop-btn').innerText = "Start";
+        }
+
+        // scoring logic
+        function changeScore(side, amount) {
+            if (side === 'left') {
+                scoreLeft = Math.max(0, scoreLeft + amount); // Verhindert Minuspunkte
+                document.getElementById('score-left').innerText = scoreLeft;
+            } else {
+                scoreRight = Math.max(0, scoreRight + amount);
+                document.getElementById('score-right').innerText = scoreRight;
+            }
+        }
+
+        function resetAll() {
+            resetTimer();
+            scoreLeft = 0;
+            scoreRight = 0;
+            document.getElementById('score-left').innerText = 0;
+            document.getElementById('score-right').innerText = 0;
+        }
+    </script>
+</body>
+</html>
