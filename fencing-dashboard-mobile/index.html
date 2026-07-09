@@ -18,7 +18,7 @@
             <div class="timer" id="time-display">03:00</div>
             <div class="timer-actions">
                 <button id="start-stop-btn" onclick="toggleTimer()">Start</button>
-                <button onclick="resetTimer()">Reset Zeit</button>
+                <button onclick="resetTimer()">Reset Time</button>
             </div>
         </section>
 
@@ -69,7 +69,7 @@
                     } else {
                         clearInterval(timerId);
                         timerId = null;
-                        alert('Zeit abgelaufen!');
+                        alert('Time over!');
                     }
                 }, 1000);
                 document.getElementById('start-stop-btn').innerText = 'Stopp';
