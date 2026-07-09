@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fechten - Mobile Kampfgericht</title>
+    <link rel="stylesheet" href="mobile-style.css">
+</head>
+<body>
+    <main class="app-shell">
+        <header class="hero">
+            <p class="eyebrow">Quan's Fencing Dashboard</p>
+            <h1></h1>
+            <a class="desktop-link" href="../fencing-dashboard/">Zur Desktop-Version</a>
+        </header>
+
+        <section class="timer-card" aria-label="Timer">
+            <div class="timer" id="time-display">03:00</div>
+            <div class="timer-actions">
+                <button id="start-stop-btn" onclick="toggleTimer()">Start</button>
+                <button onclick="resetTimer()">Reset Zeit</button>
+            </div>
+        </section>
+
+        <section class="score-grid" aria-label="Punkteanzeige">
+            <article class="fencer-card left">
+                <h2>Left Fencer</h2>
+                <div class="score" id="score-left">0</div>
+                <div class="score-actions">
+                    <button class="btn-score" onclick="changeScore('left', -1)">-</button>
+                    <button class="btn-score" onclick="changeScore('left', 1)">+</button>
+                </div>
+            </article>
+
+            <article class="fencer-card right">
+                <h2>Right Fencer</h2>
+                <div class="score" id="score-right">0</div>
+                <div class="score-actions">
+                    <button class="btn-score" onclick="changeScore('right', -1)">-</button>
+                    <button class="btn-score" onclick="changeScore('right', 1)">+</button>
+                </div>
+            </article>
+        </section>
+
+        <footer class="footer-actions">
+            <button class="danger" onclick="resetAll()">Full Reset</button>
+        </footer>
+    </main>
+
+    <script>
+        let timeLeft = 180;
+        let timerId = null;
+        let scoreLeft = 0;
+        let scoreRight = 0;
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time-display').innerText =
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            if (timerId === null) {
+                timerId = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerId);
+                        timerId = null;
+                        alert('Zeit abgelaufen!');
+                    }
+                }, 1000);
+                document.getElementById('start-stop-btn').innerText = 'Stopp';
+            } else {
+                clearInterval(timerId);
+                timerId = null;
+                document.getElementById('start-stop-btn').innerText = 'Start';
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            timeLeft = 180;
+            updateTimerDisplay();
+            document.getElementById('start-stop-btn').innerText = 'Start';
+        }
+
+        function changeScore(side, amount) {
+            if (side === 'left') {
+                scoreLeft = Math.max(0, scoreLeft + amount);
+                document.getElementById('score-left').innerText = scoreLeft;
+            } else {
+                scoreRight = Math.max(0, scoreRight + amount);
+                document.getElementById('score-right').innerText = scoreRight;
+            }
+        }
+
+        function resetAll() {
+            resetTimer();
+            scoreLeft = 0;
+            scoreRight = 0;
+            document.getElementById('score-left').innerText = 0;
+            document.getElementById('score-right').innerText = 0;
+        }
+    </script>
+</body>
+</html>
