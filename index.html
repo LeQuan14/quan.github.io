@@ -1,39 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Anh Quan Le</title>
+        <meta name="description" content="Anh Quan Le — developer, human. Projects and links.">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap">
         <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
-        <div class="menu-shell">
-            <input type="checkbox" id="menu-toggle" class="menu-toggle">
-            <label for="menu-toggle" class="menu-button" aria-label="Open or close menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
+        <nav class="nav" aria-label="Main">
+            <a class="logo" href="#top">
+                <span class="monogram">AQ</span>
+                <span class="logo-name">anh quan le</span>
+            </a>
 
-            <header class="menu-panel" aria-label="Navigation">
-                <a href="fencing-dashboard-mobile/index.html">Fencing Dashboard Mobile</a>
-                <a href="fencing-dashboard/index.html">Fencing Dashboard</a>
-            </header>
-        </div>
+            <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+                <span></span>
+                <span></span>
+            </button>
 
-        <main class="page-content">
-            <div>
+            <div class="nav-links" id="nav-links">
+                <a href="#projects">Projects</a>
+                <a href="#top">About</a>
+                <a href="https://www.linkedin.com/in/anh-quan-le-5a0b0a237/" target="_blank" rel="noreferrer">Contact</a>
+                <a class="nav-cta" href="https://www.linkedin.com/in/anh-quan-le-5a0b0a237/" target="_blank" rel="noreferrer">Say hi ↗</a>
+            </div>
+        </nav>
+
+        <main>
+            <header class="hero" id="top">
+                <p class="status">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span class="status-text">Currently: Homelabbing</span>
+                </p>
+
                 <h1>Anh Quan Le</h1>
-            </div>
 
-            <div class="socials">
-                <span>
-                    <a href="https://www.linkedin.com/in/anh-quan-le-5a0b0a237/" target="_blank" rel="noreferrer">LinkedIn</a> | <a href="https://github.com/LeQuan14" target="_blank" rel="noreferrer">GitHub</a> | <a href="https://www.instagram.com/quanl_/" target="_blank" rel="noreferrer">Instagram</a>
-                </span>
-            </div>
-            <div class="randomBox">
-                <span style="position: relative; left: 15px; top:15px;">I do stuff (sometimes).</span>
-            </div>
+                <p class="tagline"><em>I do stuff (sometimes).</em> Developer, human</p>
+
+                <div class="socials">
+                    <a class="pill pill--primary" href="https://github.com/LeQuan14" target="_blank" rel="noreferrer">GitHub ↗</a>
+                    <a class="pill" href="https://www.linkedin.com/in/anh-quan-le-5a0b0a237/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+                    <a class="pill" href="https://www.instagram.com/quanl_/" target="_blank" rel="noreferrer">Instagram ↗</a>
+                </div>
+            </header>
+
+            <section class="projects" id="projects" aria-labelledby="projects-title">
+                <div class="section-header">
+                    <div>
+                        <p class="eyebrow">01 / PROJECTS</p>
+                        <h2 id="projects-title">Things I’ve built</h2>
+                    </div>
+                    <a class="section-link" href="https://github.com/LeQuan14" target="_blank" rel="noreferrer">View all on GitHub →</a>
+                </div>
+
+                <!-- Cards are generated from the list in projects.js -->
+                <div class="project-grid" id="project-grid">
+                    <noscript>
+                        <a href="fencing-dashboard/index.html">Fencing Dashboard</a> ·
+                        <a href="fencing-dashboard-mobile/index.html">Fencing Dashboard Mobile</a>
+                    </noscript>
+                </div>
+            </section>
         </main>
+
+        <footer class="footer">
+            <p>© 2026 Anh Quan Le</p>
+            <p class="footer-note">Hand-coded with HTML &amp; CSS · hosted on GitHub Pages</p>
+        </footer>
+
+        <script src="projects.js"></script>
+        <script>
+            // Mobile menu toggle
+            const menuButton = document.querySelector(".menu-button");
+            const nav = document.querySelector(".nav");
+            menuButton.addEventListener("click", () => {
+                const open = nav.classList.toggle("is-open");
+                menuButton.setAttribute("aria-expanded", open);
+                menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+            });
+            document.querySelectorAll(".nav-links a").forEach(link =>
+                link.addEventListener("click", () => {
+                    nav.classList.remove("is-open");
+                    menuButton.setAttribute("aria-expanded", false);
+                })
+            );
+        </script>
     </body>
 </html>
