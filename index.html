@@ -9,6 +9,11 @@
     </head>
 
     <body>
+        <div class="aurora" aria-hidden="true">
+            <span class="glow glow-1"></span>
+            <span class="glow glow-2"></span>
+            <span class="glow glow-3"></span>
+        </div>
         <canvas id="snow" aria-hidden="true"></canvas>
 
         <main class="page-content">
@@ -56,6 +61,26 @@
                 let width = 0;
                 let height = 0;
                 let frameId = null;
+
+                // wind gusts: every 8-16s the wind ramps up, blows for 2-4s, then dies down
+                let wind = 0;
+                let windTarget = 0;
+                let gustFrames = 0;
+                let calmFrames = 300;
+
+                function updateWind() {
+                    if (gustFrames > 0) {
+                        if (--gustFrames <= 0) {
+                            windTarget = 0;
+                            calmFrames = Math.round(480 + Math.random() * 480);
+                        }
+                    } else if (--calmFrames <= 0) {
+                        const dir = Math.random() < 0.5 ? -1 : 1;
+                        windTarget = dir * (1.5 + Math.random() * 1.5);
+                        gustFrames = Math.round(120 + Math.random() * 120);
+                    }
+                    wind += (windTarget - wind) * 0.02;
+                }
 
                 function resize() {
                     const ratio = window.devicePixelRatio || 1;
@@ -118,12 +143,14 @@
                 }
 
                 function step() {
+                    updateWind();
                     for (let i = 0; i < flakes.length; i++) {
                         const f = flakes[i];
                         f.drift += 0.01;
-                        f.angle += f.spin;
+                        f.angle += f.spin + wind * 0.004;
                         f.y += f.speed;
-                        f.x += Math.sin(f.drift) * 0.3;
+                        // bigger flakes catch more wind
+                        f.x += Math.sin(f.drift) * 0.3 + wind * (0.5 + f.r / 10);
                         if (f.y > height + f.r) flakes[i] = makeFlake(false);
                         if (f.x > width + f.r) f.x = -f.r;
                         if (f.x < -f.r) f.x = width + f.r;

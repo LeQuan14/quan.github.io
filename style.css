@@ -39,6 +39,70 @@ body {
     overflow-x: hidden;
 }
 
+/* Slowly drifting ice blue glow behind the snow */
+
+.aurora {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.55;
+    will-change: transform;
+}
+
+.glow-1 {
+    width: 55vmax;
+    height: 40vmax;
+    top: -15vmax;
+    left: -10vmax;
+    background: radial-gradient(circle, #bfe6f8 0%, transparent 70%);
+    animation: float-1 38s ease-in-out infinite alternate;
+}
+
+.glow-2 {
+    width: 45vmax;
+    height: 45vmax;
+    bottom: -20vmax;
+    right: -12vmax;
+    background: radial-gradient(circle, #a9dcf3 0%, transparent 70%);
+    animation: float-2 46s ease-in-out infinite alternate;
+}
+
+.glow-3 {
+    width: 35vmax;
+    height: 30vmax;
+    top: 30%;
+    left: 40%;
+    background: radial-gradient(circle, #dcd9f5 0%, transparent 70%);
+    opacity: 0.4;
+    animation: float-3 54s ease-in-out infinite alternate;
+}
+
+@keyframes float-1 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(25vw, 15vh) scale(1.15); }
+    100% { transform: translate(45vw, 5vh) scale(0.95); }
+}
+
+@keyframes float-2 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(-30vw, -20vh) scale(1.1); }
+    100% { transform: translate(-15vw, -40vh) scale(1.2); }
+}
+
+@keyframes float-3 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(-35vw, 20vh) scale(1.2); }
+    100% { transform: translate(-10vw, -25vh) scale(0.9); }
+}
+
 #snow {
     position: fixed;
     inset: 0;
@@ -206,5 +270,6 @@ a:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
     .flake { animation: none; }
+    .glow { animation: none; }
     .projects li a { transition: none; }
 }
