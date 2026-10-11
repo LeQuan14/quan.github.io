@@ -1,39 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light">
+        <title>Anh Quan Le</title>
         <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
-        <div class="menu-shell">
-            <input type="checkbox" id="menu-toggle" class="menu-toggle">
-            <label for="menu-toggle" class="menu-button" aria-label="Open or close menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
-
-            <header class="menu-panel" aria-label="Navigation">
-                <a href="fencing-dashboard-mobile/index.html">Fencing Dashboard Mobile</a>
-                <a href="fencing-dashboard/index.html">Fencing Dashboard</a>
-            </header>
-        </div>
+        <canvas id="snow" aria-hidden="true"></canvas>
 
         <main class="page-content">
-            <div>
+            <header class="intro">
+                <span class="flake" aria-hidden="true">❄</span>
                 <h1>Anh Quan Le</h1>
-            </div>
+                <p class="tagline">I do stuff (sometimes).</p>
+            </header>
 
-            <div class="socials">
-                <span>
-                    <a href="https://www.linkedin.com/in/anh-quan-le-5a0b0a237/" target="_blank" rel="noreferrer">LinkedIn</a> | <a href="https://github.com/LeQuan14" target="_blank" rel="noreferrer">GitHub</a> | <a href="https://www.instagram.com/quanl_/" target="_blank" rel="noreferrer">Instagram</a>
-                </span>
-            </div>
-            <div class="randomBox">
-                <span style="position: relative; left: 15px; top:15px;">I do stuff (sometimes).</span>
-            </div>
+            <nav class="socials" aria-label="Socials">
+                <a href="https://www.linkedin.com/in/anh-quan-le-5a0b0a237/" target="_blank" rel="noreferrer">LinkedIn</a>
+                <span class="dot" aria-hidden="true">·</span>
+                <a href="https://github.com/LeQuan14" target="_blank" rel="noreferrer">GitHub</a>
+                <span class="dot" aria-hidden="true">·</span>
+                <a href="https://www.instagram.com/quanl_/" target="_blank" rel="noreferrer">Instagram</a>
+            </nav>
+
+            <section class="projects" aria-labelledby="projects-title">
+                <h2 id="projects-title">Projects</h2>
+                <ul>
+                    <li>
+                        <a href="fencing-dashboard/index.html">
+                            <span class="name">Fencing Dashboard</span>
+                            <span class="desc">Timer &amp; scoreboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="fencing-dashboard-mobile/index.html">
+                            <span class="name">Fencing Dashboard Mobile</span>
+                            <span class="desc">Pocket version</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
         </main>
+
+        <div class="snowbank" aria-hidden="true"></div>
+
+        <script>
+            (function () {
+                const canvas = document.getElementById('snow');
+                const ctx = canvas.getContext('2d');
+                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+                let flakes = [];
+                let width = 0;
+                let height = 0;
+                let frameId = null;
+
+                function resize() {
+                    const ratio = window.devicePixelRatio || 1;
+                    width = window.innerWidth;
+                    height = window.innerHeight;
+                    canvas.width = width * ratio;
+                    canvas.height = height * ratio;
+                    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+                    // density scales with screen area
+                    const count = Math.min(140, Math.round((width * height) / 11000));
+                    flakes = Array.from({ length: count }, () => makeFlake(true));
+                    if (reduceMotion.matches) draw();
+                }
+
+                function makeFlake(anywhere) {
+                    const r = Math.random() * 2.2 + 0.8;
+                    return {
+                        x: Math.random() * width,
+                        y: anywhere ? Math.random() * height : -r,
+                        r: r,
+                        speed: r * 0.25 + Math.random() * 0.3,
+                        drift: Math.random() * Math.PI * 2,
+                        alpha: Math.random() * 0.45 + 0.25
+                    };
+                }
+
+                function draw() {
+                    ctx.clearRect(0, 0, width, height);
+                    for (const f of flakes) {
+                        ctx.beginPath();
+                        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(150, 175, 200, ${f.alpha})`;
+                        ctx.fill();
+                    }
+                }
+
+                function step() {
+                    for (let i = 0; i < flakes.length; i++) {
+                        const f = flakes[i];
+                        f.drift += 0.01;
+                        f.y += f.speed;
+                        f.x += Math.sin(f.drift) * 0.3;
+                        if (f.y > height + f.r) flakes[i] = makeFlake(false);
+                        if (f.x > width + f.r) f.x = -f.r;
+                        if (f.x < -f.r) f.x = width + f.r;
+                    }
+                    draw();
+                    frameId = requestAnimationFrame(step);
+                }
+
+                function start() {
+                    cancelAnimationFrame(frameId);
+                    if (reduceMotion.matches) {
+                        draw();
+                    } else {
+                        frameId = requestAnimationFrame(step);
+                    }
+                }
+
+                window.addEventListener('resize', resize);
+                reduceMotion.addEventListener('change', start);
+                resize();
+                start();
+            })();
+        </script>
     </body>
 </html>
