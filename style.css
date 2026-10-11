@@ -3,6 +3,22 @@
     src: url('fonts/JetBrainsMonoNerdFont-Thin.ttf');
 }
 
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/CormorantGaramond-Variable.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/CormorantGaramond-Italic-Variable.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: italic;
+    font-display: swap;
+}
+
 :root {
     --bg-top: #f8fafc;
     --bg-bottom: #e6f2f9;
@@ -13,6 +29,7 @@
     --ice-soft: #e4f5fc;
     --line: #d2e6f1;
     --card: rgba(255, 255, 255, 0.65);
+    --serif: 'Cormorant Garamond', Garamond, 'Times New Roman', serif;
 }
 
 * {
@@ -132,10 +149,12 @@ body {
 }
 
 h1 {
-    margin: 0.5rem 0 0.25rem;
-    font-size: 2.3em;
-    font-weight: 400;
-    letter-spacing: 0.02em;
+    margin: 0.25rem 0 0.25rem;
+    font-family: var(--serif);
+    font-size: 3.4em;
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
 }
 
 h1::after {
@@ -151,6 +170,9 @@ h1::after {
 .tagline {
     margin: 0;
     color: var(--muted);
+    font-family: var(--serif);
+    font-size: 1.3em;
+    font-style: italic;
 }
 
 /* Links */
